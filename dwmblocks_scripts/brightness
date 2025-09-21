@@ -1,0 +1,31 @@
+#!/bin/sh
+# dwmblocks brightness module for Gentoo (AMDGPU backlight)
+
+BRIGHT_DEV="/sys/class/backlight/amdgpu_bl0"
+
+# Read current and max brightness
+curr_brightness=$(cat "$BRIGHT_DEV/brightness")
+max_brightness=$(cat "$BRIGHT_DEV/max_brightness")
+
+# Perceptual brightness percentage
+brightness_per=$(awk -v b="$curr_brightness" -v m="$max_brightness" 'BEGIN{printf "%d", sqrt(b/m)*100}')
+
+# Functions to increase/decrease brightness
+increase() {
+    step=$((max_brightness / 20))   # ~5% step
+    new=$((curr_brightness + step))
+    [ $new -gt $max_brightness ] && new=$max_brightness
+    echo $new | sudo tee "$BRIGHT_DEV/brightness" >/dev/null
+}
+
+decrease() {
+    step=$((max_brightness / 20))
+    new=$((curr_brightness - step))
+    [ $new -lt 0 ] && new=0
+    echo $new | sudo tee "$BRIGHT_DEV/brightness" >/dev/null
+}
+
+
+# Print brightness percentage
+echo " ${brightness_per}%"
+

@@ -1,0 +1,21 @@
+#!/bin/sh
+
+case $BLOCK_BUTTON in
+    1) "$TERMINAL" -e nmtui; pkill -RTMIN+4 dwmblocks ;;   # Example: open network config
+    3) notify-send "🌐 Internet module" "Wi-Fi / Ethernet status" ;;
+esac
+
+# Wi-Fi SSID via iw (for wpa_supplicant)
+wifi_ssid=$(iw dev wlo1 link | awk '/SSID/ {print $2}')
+if [ -n "$wifi_ssid" ]; then
+    wifiicon="󰖩 $wifi_ssid"
+else
+    wifiicon="󰖪"
+fi
+
+# Ethernet check
+[ "$(cat /sys/class/net/en*/operstate 2>/dev/null)" = 'up' ] && ethericon="" || ethericon=""
+
+# Print final status
+printf "%s%s\n" "$wifiicon" "$ethericon"
+

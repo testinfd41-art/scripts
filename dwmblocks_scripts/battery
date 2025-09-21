@@ -1,0 +1,49 @@
+#!/bin/sh
+
+# Prints all batteries, their percentage remaining and an emoji corresponding
+# to charge status (🔌 for plugged up, 🔋 for discharging on battery, etc.).
+
+case $BLOCK_BUTTON in
+    3) notify-send "🔋 Battery module" "🔋: discharging
+: not charging
+: stagnant charge
+ : charging
+⚡: charged
+󰁺: battery very low!
+- Scroll to change adjust xbacklight." ;;
+    4) xbacklight -inc 10 ;;
+    5) xbacklight -dec 10 ;;
+    6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac
+
+# Loop through all attached batteries and format the info
+for battery in /sys/class/power_supply/BAT?*; do
+    [ -n "${capacity+x}" ] && printf " "
+    
+    status="$(cat "$battery/status" 2>/dev/null)"
+    capacity="$(cat "$battery/capacity" 2>/dev/null)"
+    
+    # ====== Add dynamic battery icon logic here ======
+    # For example, using a simple if ladder
+    if [ "$status" = "Charging" ]; then
+        baticon=" "
+    elif [ "$capacity" -le 10 ]; then baticon="󰁺 "
+    elif [ "$capacity" -le 20 ]; then baticon="󰁻 "
+    elif [ "$capacity" -le 30 ]; then baticon="󰁼 "
+    elif [ "$capacity" -le 40 ]; then baticon="󰁽 "
+    elif [ "$capacity" -le 50 ]; then baticon="󰁾 "
+    elif [ "$capacity" -le 60 ]; then baticon="󰁿 "
+    elif [ "$capacity" -le 70 ]; then baticon="󰂀 "
+    elif [ "$capacity" -le 80 ]; then baticon="󰂁 "
+    elif [ "$capacity" -le 90 ]; then baticon="󰂂 "
+    elif [ "$capacity" -le 99 ]; then baticon="󰁹 "
+    else baticon="󰁹 "
+    fi
+    # =================================================
+
+    # Will make a warn variable if discharging and low
+    [ "$status" = "󰂎" ] && [ "$capacity" -le 20 ] && warn="󰂎"
+
+    # Prints the info
+    printf "%s%s%d%%" "$baticon" "$warn" "$capacity"; unset warn
+done && printf "\\n"

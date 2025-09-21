@@ -1,0 +1,36 @@
+#!/bin/sh
+# dwmblocks audio module for PipeWire
+# Uses Nerd Font icons: mute, low, medium, high
+
+case $BLOCK_BUTTON in
+    1) setsid -w -f "$TERMINAL" -e pulsemixer ;;          # left click
+    2) wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle ;;      # middle click mute
+    4) wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+ ;;       # scroll up
+    5) wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%- ;;       # scroll down
+    3) notify-send " Volume" "Left: mixer\nMiddle: mute\nScroll: adjust" ;;
+esac
+
+# Get volume and mute status
+vol=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2*100}')
+muted=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -o MUTED)
+
+# If muted
+if [ -n "$muted" ]; then
+    echo " "
+    exit
+fi
+
+vol_num=$(printf "%.0f" "$vol")
+
+if [ "$vol_num" -ge 70 ]; then
+    icon=""
+elif [ "$vol_num" -ge 30 ]; then
+    icon=""
+elif [ "$vol_num" -ge 1 ]; then
+    icon=""
+else
+    icon=""
+fi
+
+echo "$icon ${vol_num}%"
+
