@@ -1,0 +1,75 @@
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    "logo": {
+        "source": "~/.config/fastfetch/ascii.txt"
+    },
+    "display": {
+        "separator": " "
+    },
+    "modules": [
+        "break",
+        "break",
+        {
+            "type": "custom",
+            "format": "\u001b[35mS U C K L E S S\u001b[0m\n"
+        },
+        {
+            "type": "os",
+            "key": " ",
+            "keyColor": "32"   // Green
+        },
+        {
+            "type": "kernel",
+            "key": " ",
+            "keyColor": "33"   // Yellow
+        },
+        {
+            "type": "packages",
+            "format": "{} (pacman)",
+            "key": " ",
+            "keyColor": "36"   // Cyan
+        },
+        {
+            "type": "shell",
+            "key": " ",
+            "keyColor": "35"   // Magenta
+        },
+        {
+            "type": "wm",
+            "key": " ",
+            "keyColor": "36"   // Teal
+        },
+        {
+            "type": "cursor",
+            "key": " ",
+            "keyColor": "32"   // Green
+        },
+        {
+            "type": "terminalfont",
+            "key": " ",
+            "keyColor": "33"   // Yellow
+        },
+        {
+            "type": "uptime",
+            "key": " ",
+            "keyColor": "36"   // Cyan
+        },
+        {
+            "type": "memory",
+            "key": " ",
+            "keyColor": "34"   // Blue
+        },
+        {
+            "type": "disk",
+            "key": " ",
+            "keyColor": "31"   // Red
+        },
+        {
+            "type": "custom",
+            "format": "\u001b[90m▃▃▃  \u001b[31m▃▃▃  \u001b[32m▃▃▃  \u001b[33m▃▃▃  \u001b[34m▃▃▃  \u001b[35m▃▃▃  \u001b[36m▃▃▃  \u001b[37m▃▃▃ "
+        },
+        "break",
+        "break"
+    ]
+}
+

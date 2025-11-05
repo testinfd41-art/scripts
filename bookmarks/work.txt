@@ -1,0 +1,12 @@
+# work
+https://allen.in/
+ClaudeAI :: https://claude.ai
+ChatGPT :: https://chatgpt.com
+Github :: https://github.com
+Wikipedia :: https://wikipedia.org
+TonyBTW :: https://tonybtw.com
+Arch Wiki :: https://wiki.archlinux.org/title/Main_page
+Arch Official Packages :: https://archlinux.org/packages/
+Arch Aur Packages :: https://aur.archlinux.org/
+Dwm :: https://dwm.suckless.org/
+

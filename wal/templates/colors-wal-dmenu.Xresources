@@ -1,0 +1,6 @@
+! dmenu colors for pywal16
+dmenu.background: {background}
+dmenu.foreground: {foreground}
+dmenu.selbackground: {color4}
+dmenu.selforeground: {foreground}
+dmenu.font: monospace:size=14

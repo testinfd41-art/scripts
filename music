@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# music.sh — Download highest-quality audio from YouTube / YouTube Music
+# Focus: best sound (no recompression), best thumbnail, clean output
+# Usage: ./music.sh "URL" [output_dir]
+
+set -euo pipefail
+IFS=$'\n\t'
+
+if [ "${1:-}" = "" ]; then
+  echo "Usage: $0 \"URL\" [output_dir]"
+  echo "Example: $0 \"https://music.youtube.com/watch?v=XXXX\" ~/Musics"
+  exit 1
+fi
+
+URL="$1"
+OUTDIR="${2:-$HOME/Musics}"
+mkdir -p "$OUTDIR"
+
+command -v yt-dlp >/dev/null 2>&1 || { echo "yt-dlp not found. Install it first."; exit 2; }
+command -v ffmpeg >/dev/null 2>&1 || { echo "ffmpeg not found. Install it first."; exit 2; }
+
+# Output template: artist - title.ext )
+OUT_TMPL="$OUTDIR/%(title)s.%(ext)s"
+
+echo "󰖟 $URL"
+echo "  Saving to: $OUTDIR"
+echo
+
+yt-dlp \
+  -f "bestaudio/best" \
+  --extract-audio \
+  --audio-format mp3 \
+  --audio-quality 0 \
+  --embed-thumbnail \
+  --add-metadata \
+  --no-playlist \
+  --no-overwrites \
+  --no-mtime \
+  --no-warnings \
+  --progress-template "%(progress._default_template)s" \
+  -o "$OUT_TMPL" \
+  "$URL"
+
+echo
+echo "󰎆 Done! Your track is saved in:"
+echo "   $OUTDIR"
+

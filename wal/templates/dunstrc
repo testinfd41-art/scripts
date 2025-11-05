@@ -1,0 +1,34 @@
+[global]
+    icon_path = /usr/share/icons/hicolor/48x48/apps:/usr/share/pixmaps
+    monitor = 0
+    follow = mouse
+    width = (250, 500)
+    height = (0, 750)
+    offset = (17, 26)
+    padding = 5
+    horizontal_padding = 5
+    gap_size = 3
+    transparency = 35
+    frame_width = 1
+    frame_color="#{color5.strip}"
+    font = JetBrains Mono 11
+    corner_radius = 0
+    min_icon_size = 32
+    max_icon_size = 32
+    format = "<b>%s</b>\n%b"
+
+[urgency_low]
+    foreground = "#{color0.strip}"
+    background = "#{color2.strip}"
+    timeout = 3
+
+[urgency_normal]
+    foreground = "#{color0.strip}"
+    background = "#{color3.strip}"
+    timeout = 5
+
+[urgency_critical]
+    background = "#{color7.strip}"
+    foreground = "#{color0.strip}"
+    frame_color = "#{color1.strip}"
+    timeout = 15

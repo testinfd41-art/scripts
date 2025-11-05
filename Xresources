@@ -1,0 +1,19 @@
+! === Font & DPI settings ===
+Xft.dpi: 120         ! around 1.25x scaling (96 * 1.25 ≈ 120)
+Xft.antialias: 1
+Xft.hinting: 1
+Xft.hintstyle: hintslight
+Xft.rgba: rgb
+Xft.lcdfilter: lcddefault
+! DWM XRDB test using your color names
+dwm.col_gray1: #111111
+dwm.col_gray2: #333333
+dwm.col_gray3: #00ff99
+dwm.col_gray4: #ffffff
+dwm.col_cyan:  #00aaff
+dwm.col_fg:    #ffcc00
+dwm.col_bg:    #000000
+dwm.col_border: #ff0000
+dwm.col_fade:  #777777
+dwm.col_tag:   #ff8800
+
