@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# power-menu - clean and working dmenu power menu
+#
+
+# Set font and prompt for dmenu
+DMENU_CMD="dmenu -i -l 10 -fn 'JetBrainsMono Nerd Font:size=12' -p 'Power Menu:'"
+
+# Define the options (each on its own line)
+options="⏻  Shutdown
+  Reboot
+  Suspend
+⏾  Hibernate
+  Logout"
+
+# Show menu and store the selection
+choice=$(echo -e "$options" | eval "$DMENU_CMD")
+
+# Exit if no choice
+[ -z "$choice" ] && exit 0
+
+# Perform the selected action
+case "$choice" in
+    *Shutdown*) systemctl poweroff ;;
+    *Reboot*) systemctl reboot ;;
+    *Suspend*) systemctl suspend ;;
+    *Hibernate*) systemctl hibernate ;;
+    *Logout*) pkill -KILL -u "$USER" ;;
+esac
+

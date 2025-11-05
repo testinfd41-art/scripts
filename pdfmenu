@@ -1,0 +1,33 @@
+#!/bin/bash
+#
+# pdfmenu - search and open PDFs using dmenu + zathura
+#
+
+PDF_VIEWER="zathura"
+SEARCH_DIR="$HOME"
+
+# Find all PDFs in your home directory (case-insensitive)
+mapfile -t pdf_files < <(find "$SEARCH_DIR" -type f -iname "*.pdf" 2>/dev/null)
+
+# Exit if no PDFs found
+if [ ${#pdf_files[@]} -eq 0 ]; then
+    notify-send "No PDFs found in $SEARCH_DIR"
+    exit 1
+fi
+
+# Show filenames (relative to $HOME) in dmenu
+choice=$(printf '%s\n' "${pdf_files[@]}" | sed "s|$HOME/||" | dmenu -i -l 20 -p "Select PDF:")
+
+# Exit if user cancelled
+[ -z "$choice" ] && exit 0
+
+# Reconstruct full path
+selected="$HOME/$choice"
+
+# Open the selected file in zathura
+if [ -f "$selected" ]; then
+    setsid -f "$PDF_VIEWER" "$selected" >/dev/null 2>&1
+else
+    notify-send "File not found: $selected"
+fi
+
