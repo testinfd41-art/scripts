@@ -1,0 +1,29 @@
+# === CONFIGURATION ===
+NOTES_DIR="$HOME/Notes"
+TERMINAL="${TERMINAL:-st}"   # fallback to 'st' if not defined
+EDITOR="nvim"
+# === ENSURE NOTES FOLDER EXISTS ===
+mkdir -p "$NOTES_DIR"
+# === MAIN MENU ===
+choice=$(
+    {
+        echo " New Note"
+        find "$NOTES_DIR" -maxdepth 1 -type f -name "*.md" -printf "%f\n" | sort -r
+    } | dmenu -c -l 10 -i -p "Notes:"
+)
+# === HANDLE USER CHOICE ===
+case "$choice" in
+    " New Note")
+     name=$(printf '' | dmenu -c -p "Enter note name:")
+        [ -z "$name" ] && exit 0
+        file="$NOTES_DIR/${name}.md"
+        ;;
+    *.md)
+        file="$NOTES_DIR/$choice"
+        ;;
+    *)
+        exit 0
+        ;;
+esac
+# === OPEN NOTE IN NVIM INSIDE TERMINAL ===
+setsid -f "$TERMINAL" -e "$EDITOR" "$file" >/dev/null 2>&1
