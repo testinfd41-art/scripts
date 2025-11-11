@@ -1,0 +1,9 @@
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+dunst &
+picom & 
+xrandr \
+  --output HDMI-1 --mode 1920x1080 --rate 100 --scale 1x1 --pos 0x0 --primary \
+  --output eDP-1 --auto --pos 2880x0
+dwmblocks &
+xautolock -time 4 -locker "systemctl suspend" &
+
